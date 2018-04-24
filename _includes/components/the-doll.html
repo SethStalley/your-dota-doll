@@ -6,12 +6,13 @@
         const player = worstFriend(data)
         const winRate = (player.with_win / player.with_games * 100).toFixed(2)
 
-        var html = '<h2>' + player.personaname + '</h2>'
+        let html = '<h2>' + player.personaname + '</h2>'
         html += "<img src='" + player.avatarfull + "'/>"
         html += '<h3> Winrate: ' + winRate  + '%</h3>'
         
         document.getElementById('worst-friend').innerHTML = html
     })
+
 
     function worstFriend(data, min_games_played_with = 15) {
         let worstWinRate = 100;
@@ -28,7 +29,7 @@
                 worstFriend = friend
             }
         }
-        console.log(worstFriend)
+
         return worstFriend
     }
 
