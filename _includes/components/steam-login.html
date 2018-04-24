@@ -1,0 +1,25 @@
+<script>
+    function redirectToSteamLogin() {
+        const realm = window.location.hostname
+        let redirect = ''
+
+        if (realm === 'localhost') 
+            redirect = realm + ":4000/user"
+        else
+            redirect = realm + "/{{site.github.repository_nam}}/user"
+
+        console.log(realm)
+        console.log(redirect)
+        
+        const loginUrl = "https://steamcommunity.com/openid/login?openid.mode=checkid_setup&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.return_to=http%3A%2F%2F" + redirect + "&openid.realm=http%3A%2F%2F" + realm
+        
+        document.getElementById('steam-login').href = loginUrl
+    }
+
+</script>
+
+<div style="text-align: center;">
+    <a id='steam-login' href="#" onclick="redirectToSteamLogin()">
+    <img src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_02.png" width="109" height="66" border="0">
+    </a>
+</div>

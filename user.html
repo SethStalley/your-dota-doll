@@ -1,0 +1,15 @@
+---
+layout: myLayout
+---
+
+<script>
+    const url = new URL(window.location.href);
+    let steamID64 = url.searchParams.get("openid.claimed_id").replace('https://steamcommunity.com/openid/id/','');
+    if (steamID64 === '')
+        steamID64 = url.searchParams.get('id')
+
+    const steamID32 = SteamIDConverter.toSteamID3(steamID64).split(':')[2].slice(0, -1)
+    console.log(steamID32);
+</script>
+
+{% include components/the-doll.html %}

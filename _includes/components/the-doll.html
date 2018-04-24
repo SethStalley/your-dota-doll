@@ -1,8 +1,8 @@
 <script>
-       
-    const url = 'https://api.opendota.com/api/players/52298617/peers'
 
-    httpGetAsync(url, function(data) {
+    const GET_PEERS_URL = 'https://api.opendota.com/api/players/' + steamID32 + '/peers'
+
+    httpGetAsync(GET_PEERS_URL, function(data) {
         const player = worstFriend(data)
         const winRate = (player.with_win / player.with_games * 100).toFixed(2)
 
@@ -15,6 +15,9 @@
 
 
     function worstFriend(data, min_games_played_with = 15) {
+        if (!steamID32) 
+            return null
+
         let worstWinRate = 100;
         let worstFriend = null;
 
