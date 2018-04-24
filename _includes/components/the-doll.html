@@ -1,0 +1,37 @@
+<script>
+       
+    const url = 'https://api.opendota.com/api/players/52298617/peers'
+
+    httpGetAsync(url, function(data) {
+        const player = worstFriend(data)
+        const winRate = (player.with_win / player.with_games * 100).toFixed(2)
+
+        var html = '<h2>' + player.personaname + '</h2>'
+        html += "<img src='" + player.avatarfull + "'/>"
+        html += '<h3> Winrate: ' + winRate  + '%</h3>'
+        
+        document.getElementById('worst-friend').innerHTML = html
+    })
+
+    function worstFriend(data, min_games_played_with = 15) {
+        let worstWinRate = 100;
+        let worstFriend = null;
+
+        for (let friend of data) {
+            if (friend.games < min_games_played_with)
+                continue
+
+            const winRate = friend.with_win / friend.with_games
+            
+            if (winRate < worstWinRate) {
+                worstWinRate = winRate
+                worstFriend = friend
+            }
+        }
+        console.log(worstFriend)
+        return worstFriend
+    }
+
+</script>
+
+<div id='worst-friend' style="text-align: center"></div>
