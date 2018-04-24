@@ -1,7 +1,7 @@
 ---
 layout: myLayout
 show_header: true
-title: Your Dota2 doll is
+title: Your Dota 2 doll is
 ---
 
 <script>
