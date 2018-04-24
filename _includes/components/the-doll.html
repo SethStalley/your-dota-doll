@@ -3,18 +3,34 @@
     const GET_PEERS_URL = 'https://api.opendota.com/api/players/' + steamID32 + '/peers'
 
     httpGetAsync(GET_PEERS_URL, function(data) {
-        const player = worstFriend(data)
+        stopSpinner()
+
+        const player = getWorstFriend(data)
+        
+        if (player == null)
+            document.getElementById('no-friend').hidden = false
+         else 
+            drawDoll(player)
+    })
+
+    function stopSpinner() {
+        document.getElementById('spinner').hidden = true
+    }
+
+    function drawDoll(player) {
         const winRate = (player.with_win / player.with_games * 100).toFixed(2)
 
         let html = '<h2>' + player.personaname + '</h2>'
         html += "<img src='" + player.avatarfull + "'/>"
-        html += '<h3> Winrate: ' + winRate  + '%</h3>'
+        html += "<h3> Winrate: <span style='color: brown;'>" + winRate  + '%</span></h3>'
         
-        document.getElementById('worst-friend').innerHTML = html
-    })
+        document.getElementById('doll-info').innerHTML = html
+        document.getElementById('worst-friend').hidden = false
+    }
 
-
-    function worstFriend(data, min_games_played_with = 15) {
+    // Returns friend you have the worst winrate with.
+    // Only considers friends that have played at least 'min_games_played_with' with you.
+    function getWorstFriend(data, min_games_played_with = 15) {
         if (!steamID32) 
             return null
 
@@ -38,4 +54,24 @@
 
 </script>
 
-<div id='worst-friend' style="text-align: center"></div>
+<section>
+    <div id='spinner' class="spinner">
+        <div class="cube1"></div>
+        <div class="cube2"></div>
+    </div>
+    <div style="text-align: center">  
+        <div id='worst-friend' hidden='true'>
+            <span id='doll-info'></span>
+            <p style="padding-top: 10%;">Maybe you should consider getting better friends?</p>
+        </div>
+        <div id='no-friend' hidden='true'>
+            <h2>You haven't played enough games with any friends.</h2>
+            <img
+                style="padding-top: 10%" 
+                src="{{'/assets/img/ic_mood_bad_white_36px.svg' | relative_url }}" 
+                width="35%">
+            <p style="padding-top: 10%;">Maybe you should get some friends?</p>
+        </div>
+    </div>
+</section>
+
