@@ -2,11 +2,11 @@
     function redirectToSteamLogin() {
         const realm = window.location.hostname
         let redirect = ''
-
+        
         if (realm === 'localhost') 
             redirect = realm + ":4000/user"
         else
-            redirect = realm + "/{{site.github.repository_nam}}/user"
+            redirect = realm + "/your-dota-doll/user"
 
         console.log(realm)
         console.log(redirect)
@@ -15,6 +15,8 @@
         
         document.getElementById('steam-login').href = loginUrl
     }
+
+    redirectToSteamLogin()
 
 </script>
 
